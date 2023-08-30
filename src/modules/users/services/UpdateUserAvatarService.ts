@@ -7,15 +7,15 @@ import { User } from "../typeorm/entities/User";
 import uploadConfig from '@config/upload';
 
 interface IRequest {
-  userId: string,
-  avatarFilename: string
+  user_id: string;
+  avatarFilename: string;
 }
 
 class UpdateUserAvatarService {
-  public async execute({ userId, avatarFilename }: IRequest): Promise<User> {
+  public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
     const usersRepository = getCustomRepository(UserRepository);
 
-    const user = await usersRepository.findById(userId);
+    const user = await usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError(404, 'User not found.');
