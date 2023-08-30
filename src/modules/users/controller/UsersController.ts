@@ -6,6 +6,7 @@ import DeleteUserService from "../services/DeleteUserService";
 export default class UserController{
   public async index(request: Request, response: Response): Promise<Response> {
     const listUser = new ListUserService();
+    //console.log(request.user.id);   --Verifica override de request
     const users = await listUser.execute();
 
     return response.json(users);
