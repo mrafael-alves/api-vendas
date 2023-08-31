@@ -18,7 +18,7 @@ profileRouter.put(
       email: Joi.string().required(),
       password: Joi.string().optional(),
       old_password: Joi.string(),
-      password_confimartion: Joi.string()
+      password_confirmation: Joi.string()
         .valid(Joi.ref('password'))
         .when('password', {
           is: Joi.exist(),
