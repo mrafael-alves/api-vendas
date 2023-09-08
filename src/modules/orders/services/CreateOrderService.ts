@@ -64,13 +64,13 @@ class CreateOrderService {
     }));
 
 
-    console.log(customerExists);
-    console.log(serializedProducts);
+    //console.log(customerExists);
+    //console.log(serializedProducts);
     const order = await ordersRepository.createOrder({
       customer: customerExists,
       products: serializedProducts
     });
-    console.log(order);
+    //console.log(order);
 
     //Atualiza estoque no banco de dados
     const { order_products } = order;

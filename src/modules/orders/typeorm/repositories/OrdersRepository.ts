@@ -31,7 +31,7 @@ export default class OrdersRepository extends Repository<Order> {
       order_products: products
     });
 
-    console.log(order);
+    //console.log(order);
 
     await this.save(order);
 
