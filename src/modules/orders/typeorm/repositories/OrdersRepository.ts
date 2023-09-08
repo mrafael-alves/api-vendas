@@ -15,7 +15,7 @@ interface IRequest {
 
 
 @EntityRepository(Order)
-export class OrdersRepository extends Repository<Order> {
+export default class OrdersRepository extends Repository<Order> {
 
   public async findById(id: string): Promise<Order | undefined> {
     const order = await this.findOne(id, {
@@ -25,11 +25,13 @@ export class OrdersRepository extends Repository<Order> {
     return order;
   }
 
-  public async createOrder({ customer, products }: IRequest): Promise<Order>{
+  public async createOrder({ customer, products }: IRequest): Promise<Order> {
     const order = this.create({
-      customer,
+      customer:  customer,
       order_products: products
     });
+
+    console.log(order);
 
     await this.save(order);
 

@@ -1,7 +1,7 @@
 import AppError from "@shared/errors/AppError";
 import { getCustomRepository } from "typeorm";
 import Order from "../typeorm/entities/Order";
-import { OrdersRepository } from "../typeorm/repositories/OrdersRepository";
+import OrdersRepository from "../typeorm/repositories/OrdersRepository";
 import { CustomersRepository } from "@modules/customers/typeorm/repositories/CustomerRepository";
 import ProductsRepository from "@modules/products/typeorm/repositories/ProductRepository";
 
@@ -25,6 +25,8 @@ class CreateOrderService {
 
     //Busca cliente
     const customerExists = await customersRepository.findById(customer_id);
+
+    console.log(customerExists);
     if (!customerExists) {
       throw new AppError(400, 'Could not find any customer with the given id.');
     }
@@ -61,18 +63,21 @@ class CreateOrderService {
       price: existsProducts.filter(p => p.id === product.id)[0].price
     }));
 
+
+    console.log(customerExists);
+    console.log(serializedProducts);
     const order = await ordersRepository.createOrder({
       customer: customerExists,
       products: serializedProducts
     });
+    console.log(order);
 
     //Atualiza estoque no banco de dados
     const { order_products } = order;
     const updatedProductQuantity = order_products.map(product => ({
       id: product.product_id,
       quantity:
-        existsProducts.filter(p => p.id === product.product_id)[0].quantity -
-        product.quantity
+        existsProducts.filter(p => p.id === product.product_id)[0].quantity - product.quantity
     }));
 
     await productsRepository.save(updatedProductQuantity);

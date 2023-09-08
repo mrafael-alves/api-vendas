@@ -25,7 +25,7 @@ customersRouter.post(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
-      email: Joi.string().required()
+      email: Joi.string().email().required()
     }
   }),
   customersController.create
@@ -36,7 +36,7 @@ customersRouter.put(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
-      email: Joi.string().required()
+      email: Joi.string().email().required()
     },
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required()

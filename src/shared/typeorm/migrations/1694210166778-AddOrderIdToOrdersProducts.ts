@@ -1,13 +1,13 @@
 import {MigrationInterface, QueryRunner, TableColumn, TableForeignKey} from "typeorm";
 
-export class AddCustomerIdToOrders1694022355757 implements MigrationInterface {
+export class AddOrderIdToOrdersProducts1694210166778 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.addColumn(
-      'orders',
+      await queryRunner.addColumn(
+      'orders_products',
       new TableColumn(
         {
-          name: 'customer_id',
+          name: 'order_id',
           type: 'uuid',
           isNullable: true
         }
@@ -15,23 +15,23 @@ export class AddCustomerIdToOrders1694022355757 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'orders',
+      'orders_products',
       new TableForeignKey(
         {
-          name: 'CustomerOrders',
-          columnNames: ['customer_id'],
-          referencedTableName: 'customers',
+          name: 'OrdersProductsOrder',
+          columnNames: ['order_id'],
+          referencedTableName: 'orders',
           referencedColumnNames: ['id'],
           onDelete: 'SET NULL',
 
         }
       )
     );
-  }
+    }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('orders', 'CustomerOrders');
-    await queryRunner.dropColumn('orders', 'customer_id');
+    await queryRunner.dropForeignKey('orders_products', 'OrdersProductsOrder');
+    await queryRunner.dropColumn('orders_products', 'order_id');
   }
 
 }
